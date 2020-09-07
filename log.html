@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"">
+    <script src="./js/jquery-3.3.1.js"></script>
+    <script src="./js/bootstrap.js"></script>
+    <link href="./css/summernote.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+    <title>记录生活，记录美好瞬间</title>
+    <STYLE>
+        @media screen and (min-width: 1024px) {
+            body {
+                padding: 0;
+                margin: 0;
+                background-image: url("./photos/bgsea.png");
+                background-attachment: fixed;
+                background-size: cover;
+                font-family: 华文楷体, Helvetica neue, Helvetica Tahoma, lantinghei sc, Microsoft Yahei;
+
+            }
+        }
+
+        @media screen and (max-width: 1023px) {
+            body {
+                padding: 0;
+                margin: 0;
+                font-family: 华文楷体, Helvetica neue, Helvetica Tahoma, lantinghei sc, Microsoft Yahei;
+                background-color: #D6E0F4;
+            }
+        }
+
+        .content {
+            margin-top: 80px;
+        }
+
+        #loading{
+            position: absolute;
+            display: block;
+            top:0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("./photos/loading2.gif");
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </STYLE>
+</head>
+<body>
+<div id="error" style="display: none;text-align: center;margin-top:10%;"><h1>Sorry,IE浏览器不支持打开该网站，请使用火狐、360、搜狗浏览器进行使用</h1></div>
+<div id="loading"></div>
+<div id="app">
+    <top-narbar @tologin="tologin" :islogin="islogin" @logout="logout"></top-narbar>
+    <router-view @tologin="tologin" @logout="logout"></router-view>
+    <login v-show="checklogin" @tologin="tologin" :checklogin="checklogin"></login>
+    <totop></totop>
+    <bottom-footer></bottom-footer>
+</div>
+<script src="./js/bundle2.js"></script>
+</body>
+<script  type="text/javascript" >
+    var ty=window.navigator.userAgent.toString();
+    if(ty.indexOf("MSIE")!=-1|ty.indexOf("Trident")!=-1){
+        $("#error").css("display","block")
+    }else{
+
+    }
+    $(document).ready(function () {
+        $("#loading").css("display","none")
+    })
+
+</script>
+</html>

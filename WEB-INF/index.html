@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+
+    <title>记录生活，记录美好瞬间</title>
+    <style type="text/css">
+
+
+
+        body {
+
+            padding:0;
+            margin: 0;
+            background-image: url("../photos/bgsea.png");
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: 华文楷体;
+        }
+
+        .logo {
+            margin-top: 1vh;
+            height: 10vh;
+            padding: 0;
+        }
+
+        .navegation {
+            margin-top: 1vh;
+            height: auto;
+            background-color: rgba(238, 243, 245, 1);
+            padding: 0;
+
+
+        }
+
+        .main {
+            margin-top: 1vh;
+            padding:0;
+        }
+
+        .content {
+            background-color: rgba(238, 243, 245, 0.8);
+
+        }
+
+        .introduce {
+            height:auto;
+            background-color: white;
+        }
+
+        .introduce p{
+            text-indent:2em;
+        }
+        .text-descrite{
+            text-indent:0em;
+            font-size:20px;
+        }
+
+        .introduce p:nth-child(2n){
+
+           background-color:#e0e0e0;
+        }
+
+
+        .landing {
+            margin-top: 3vh;
+            height: auto;
+            background-color: #B7C1EC;
+          /* display: none;登录后使用*/
+        }
+
+        .write-text {
+            margin-top: 3vh;
+            height: auto;
+            background-color: white;
+            text-align: center;
+            background-color:#e0e0e0;
+        }
+
+        .cateloge {
+            height: auto;
+            background-color: rgba(238, 243, 245, 0.1);
+            padding: 0;
+
+        }
+
+        .newtext {
+            margin-top: 3vh;
+            height:auto;
+            background-color:#e0e0e0;
+        }
+        .newtext hr{
+            margin:0;
+            border-top: 1px solid #2F518C;
+
+        }
+
+        .main-left {
+            padding: 0;
+
+        }
+
+        .navbar-collapse ul {
+            width: 100%;
+        }
+
+        .navbar-nav li {
+            text-align: center;
+            white-space: nowrap;
+            width: 20%;
+            color: black;
+            font-family: 华文楷体;
+        }
+
+        .navbar-nav li a {
+            color: black;
+            font-family: 华文楷体;
+            font-size: 20px;
+        }
+        .navbar-nav li a:hover{
+            font-size: 25px;
+        }
+        #nowpage {
+            font-size: 25px;
+
+        }
+
+
+        .navegation .navbar-collapse {
+            padding: 0;
+        }
+
+        .dropdown-menu li {
+            width: 100%;
+        }
+
+        .thumbnail {
+            padding: 0;
+            background-color: rgba(238, 243, 245, 0.1);
+            margin-bottom: 10px;
+        }
+        #img-study{
+            margin-bottom: 0;
+        }
+        .cateloge a:hover{
+            opacity:0.5;
+        }
+        .btn-write{
+
+            text-align:left;
+            background-color: #D8A86E;
+        }
+        .minimenu{
+            background-color: #4cae4c;
+            color:white;
+        }
+        .img-cateloge{
+            /*设置图片的内边距*/
+
+
+        }
+        .footer{
+            background-color:black;
+            text-align: center;
+            color:white;
+        }
+    </style>
+</head>
+<body>
+<div class="row">
+    <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" style="padding:0;">
+        <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3 logo">
+            <a href="index.html"><img src="../photos/logo3.png" class="img-responsive center-block" alt="Responsive image"></a>
+        </div>
+        <div class="col-lg-11 col-md-11 col-sm-9 col-xs-9 navegation" style="padding:0;">
+            <button type="button" class="navbar-toggle collapsed minimenu" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+
+                菜单
+            </button>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#" id="nowpage">首页</a></li>
+                    <li><a href="#">记录美好</a></li>
+                    <li><a href="#">发现故事</a></li>
+                    <li><a href="#">关于本站</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">我的<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">登录/注册</a></li>
+                            <li><a href="#">我的收藏</a></li>
+                            <li><a href="#">我的文章</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
+</div>
+
+
+<div class="row main">
+    <!--主体部分-->
+    <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 content">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 main-left">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 introduce">
+                    <p style="text-indent:0;font-size:20px;">网站简介</p>
+                    <p>这场人生的漫长旅行，我们走走停停。去过的地方、看过的风景、经历的事情、遇见的人、收获的心情
+                        ，都成为了我们生命的一部分。</p>
+                    <p> 热爱生活的你，是否有想过，把这些记录下来，让他们作为逝去时光的纪念呢？</p>
+                    <p>在这里，写下你的故事或是一段小插曲，分享你的喜悦，或者难过时，忧伤可以得到舒缓。</p>
+                    <p>你也可以在这里结识到志趣相投的伙伴哦！互相交流。</p>
+                    <p>本站无需你提供个人私密信息，只要你用邮箱在本站<a href="">注册一个账号</a>便开启开启你的美好之旅啦！
+                    </p>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 landing">
+                    <p class="text-descrite">登录栏</p>
+                    <form>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> 记住我
+                            </label>
+                            <label>
+                                <button type="submit" class="btn btn-success">登录</button>
+                            </label>
+                            <label>  <button type="submit" class="btn">注册</button>
+                            </label>
+                        </div>
+
+                    </form>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 write-text">
+                    <p class="text-descrite" style="text-align:left;">发布文章</p>
+                    <form>
+                        <div class="form-group">
+                            <label> <button type="button" class="btn btn-write btn-lg">发布文章</button></label>
+                        </div>
+
+                        <div class="form-group">
+                            <label> <button type="button" class="btn btn-write btn-lg">最新动态</button></label>
+                        </div>
+                    </form>
+
+
+
+
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0 main-line"></div>
+        <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 main-right">
+            <div class="row">
+                <p class="text-descrite">动态分类</p>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 cateloge">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 img-cateloge">
+                            <a href="#" class="thumbnail">
+                                <img src="../cateloge/sport4.png">
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 img-cateloge">
+                            <a href="#" class="thumbnail">
+                                <img src="../cateloge/food4.png">
+                            </a>
+                            <a href="#" class="thumbnail">
+                                <img src="../cateloge/study4.png">
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 img-cateloge">
+                            <a href="#" class="thumbnail">
+                                <img src="../cateloge/trip4.png">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 img-cateloge">
+                            <a href="#" class="thumbnail">
+                                <img src="../cateloge/love4.png">
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 img-cateloge">
+                            <a href="#" class="thumbnail" >
+                                <img src="../cateloge/game4.png">
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-0 col-xs-0 img-cateloge">
+
+                              <h1 style="color: black;">更多美好，等你发现...</h1>
+
+                        </div>
+                    </div>
+
+               <!--     <a href="#" class="thumbnail">
+                        <img src="../photos/category3.png">
+                    </a>
+                -->
+
+                </div>
+
+            </div>
+
+            <div class="row newtext">
+                <p class="text-descrite">热门动态栏</p>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="newtext">
+                    <p><a href="">和平精英，胜利大法，强！</a></p>
+                    <p>和平精英，胜利大法，强！</p>
+                    <p>和平精英，胜利大法，强！</p>
+                    <p>和平精英，胜利大法，强！</p>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
+</div>
+<div class="row">
+    <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0 "></div>
+   <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 footer">
+       <p>粤ICP备19031574号-1</p>
+       <P><a href="http://www.beian.miit.gov.cn">备案查询</a></P>
+   </div>
+    <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
+</div>
+
+</body>
+</html>

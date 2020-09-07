@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人管理页面</title>
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <style>
+        body {
+            background-color: rgba(245, 246, 247, 0.5);
+        }
+
+        .text-main-navgation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 66;
+        }
+
+        .main-right {
+            background-color: white;
+            z-index: 8;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <top-narbar></top-narbar>
+    <middlemain></middlemain>
+</div>
+<!--template发在根元素外面的-->
+<template id="middlemain">
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 main">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 nav-left">
+            <ul class="list-group">
+                <li v-for="item,index in leftlist" :class="item.liclass"><a :href="item.href" :class="item.aclass"
+                                                                            @click.prevent.stop="toMy(item.href)">{{item.name}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 main-right">
+            <!--我的收藏页面-->
+            <component :is="comid"></component>
+
+
+            <!--我的文章页面-->
+
+            <!--我的关注页面-->
+
+        </div>
+    </div>
+</template>
+
+
+<template id="mylogs">
+    <div class="row text-main">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 visit-article" v-for="item,index in loglist">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 text-title">
+                        <h3><a href="">{{item.title}}</a></h3>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0 text-time hidden-xs">
+                        <span class="day">{{item.date.slice(-3,-1)}}</span>
+                        <div class="monthandyear">
+                            <div class="month">{{item.date.slice(6,7)}}月</div>
+                            <div class="year">{{item.date.slice(0,4)}}年</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-content">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 content-pic">
+                        <a href=""><img :src="item.logimgs[0].imgsrc" class="img-responsive center-block"> </a>
+                        <div class="sparkle"></div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 content-text">
+                        <div class="mytext">
+                            {{item.text}}
+                            <!--    实验要求：每1s输出一次最新RTC时间。定时把RTC时间存入到FLASH中，当系统重新启动后，能够恢复FLASH中的RTC时间，继续进行计时。
+                                项目下载地址：https://pan.baidu.com/s/1NGh6u9MMCn_9fhaP8DopKg 提取码：whv6
+                                实验思路：系统上电后先读取fatfs文件信息，当读到time标志后将后面的时间数据提取出来进行解析并赋值给my_sTime和my_sDate，如果没有读到time标志则认为fatfs数据不可用
+                                并给my_sTime和my_sDate赋默认值，进入主循环后获取当前时间并输出，然后将当前信息存储到SD卡中，延时1s。
+                                主函数中代码较多，所以讲挂载、格式化、读磁盘状态、读文件、写文件的相应代码分别封装成函数以便使用。
+                                函数详解：
+                                写文件：
+
+                                void file_write(uint8_t res, FIL *pf, RTC_TimeTypeDef *my_sTime, RTC_DateTypeDef
+                                *my_sDate)
+                                {
+                                res = f_open(pf, "0:/test.txt", FA_OPEN_ALWAYS | FA_WRITE);
+                                if (res == FR_OK)
+                                {
+                                printf("creat ok\n");
+                                }
+                                else
+                                {
+                                printf("creat failed\n");
+                                printf("error code: %d\n",res);
+                                }
+                                // char tr1[]="1234567890abc!\n";
+                                f_printf(pf, "time%d-%d-%d %d:%d:%d*",my_sDate->Year, my_sDate->Month,
+                                my_sDate->Date, my_sTime->Hours, \
+                                my_sTime->Minutes, my_sTime->Seconds); // 格式化输出
+                                //f_printf(pf, "0000000000000000000000000000000000000000000000000000");
+                                res = f_close(pf);
+                                if (res != FR_OK)
+                                {
+                                printf("close file error\n");
+                                printf("error code: %d\n",res);
+                                }
+                                else
+                                {
+                                // printf("write data OK");
+                                }
+                                }
+
+                                将时间数据格式化写入SD卡，并在数据前加上time作为标志。
+                                读文件：
+
+                                uint8_t *file_read(uint8_t res, FIL *file, uint8_t num)
+                                {-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <a class="text-readnow" href="" @click.prevent.stop="readnow(index)">立即阅读</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-footer">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 footer-category">
+                        <span class="glyphicon glyphicon-tags"></span>
+                        <span v-for="item,index in item.category"
+                              :class="cateclasstype[item.cateID]">{{item.catename}}</span>
+                        <!--<span class="label label-default" >运动</span>
+                            <span class="label label-primary">学习</span>
+                            <span class="label label-success">旅行</span>
+                            <span class="label label-info">运动</span>
+                            <span class="label label-warning">美食</span>
+                            <span class="label label-danger">恋爱</span>-->
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 footer-message">
+                        <span class="glyphicon glyphicon-comment" aria-hidden="true"><small class="message">{{item.num_message}}</small> </span>
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"><small class="visited">{{item.num_visited}}</small></span>
+                        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"><small class="like">{{item.num_like}}</small></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<template id="mycollect">
+    <div class="row list-group">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mylike">
+            <a href="" class="list-group-item active">我的收藏</a>
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">
+                    你喜欢的都在这呢
+                </h4>
+                <h4 v-for="item,index in loglist">
+                    <a @click='toTextDetail(index)'>
+                        {{item.title}}
+                    </a>
+                    <button style='float:right;' type='button' class='btn btn-danger btn-sm'
+                            @click='cancelLike(index)'><span class='glyphicon glyphicon-remove'></span>取消收藏
+                    </button>
+                </h4>
+            </div>
+        </div>
+    </div>
+</template>
+<template id="myattention">
+    <div class="row list-group">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 myconcern">
+            <a href="" class="list-group-item active">我的关注</a>
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">
+                    你关注的小伙伴都在这呢
+                </h4>
+                <h4 v-for="item,index in friendlist">
+                    <a @click='toFriendDetail(index)'>
+                        {{item.username}}
+                    </a>
+                    <button style='float:right;' type='button' class='btn btn-danger btn-sm'
+                            @click='cancelAttention(index)'><span class='glyphicon glyphicon-remove'></span>取消关注
+                    </button>
+                </h4>
+
+
+            </div>
+        </div>
+    </div>
+</template>
+
+
+</body>
+<script type="text/javascript" src="js/vue.js"></script>
+
+<script>
+    //全局组件——顶部导航栏
+    Vue.component("top-narbar", {
+        template: "<div class=\"text-main-navgation\">\n" +
+            "    <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"padding:0;\">\n" +
+            "        <div class=\"col-lg-1 col-md-1 col-sm-3 col-xs-0 logo hidden-xs\">\n" +
+            "            <a href=\"index.html\"><img src=\"photos/logo3.png\" class=\"img-responsive center-block\" alt=\"Responsive image\"></a>\n" +
+            "        </div>\n" +
+            "        <div class=\"col-lg-11 col-md-11 col-sm-9 col-xs-12 navegation\" style=\"padding:0;\">\n" +
+            "            <button type=\"button\" class=\"navbar-toggle collapsed minimenu\" data-toggle=\"collapse\"\n" +
+            "                    data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\n" +
+            "\n" +
+            "                菜单\n" +
+            "            </button>\n" +
+            "\n" +
+            "            <!-- Collect the nav links, forms, and other content for toggling -->\n" +
+            "            <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n" +
+            "                <ul class=\"nav navbar-nav\">\n" +
+            "                    <li v-for='item,index in narlist'><a :href=item.href  ref='nara'>{{item.name}}</a></li>\n" +
+            /*    "                    <li><a href=\"index.html\" @click.stop='toNowpage' ref='a'>首页</a></li>\n" +
+                "                    <li><a href=\"text-write.html\" @click='toNowpage' ref='a'>记录美好</a></li>\n" +
+                "                    <li><a href=\"text-main.html\" @click='toNowpage' ref='a'>发现故事</a></li>\n" +
+                "                    <li><a href=\"aboutsite.html\" @click='toNowpage'>关于本站</a></li>\n" +*/
+            "                    <li class=\"dropdown\">\n" +
+            "                        <a href=\"aboutme.html\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\"\n" +
+            "                           aria-expanded=\"false\" id=\"nowpage\" :class='{active:isActive}'>我的<span class=\"caret\"></span></a>\n" +
+            "                        <ul class=\"dropdown-menu\">\n" +
+            "                            <li v-for='item,index in ablist'><a :href=item.href @click.prevent.stop='toNowpage(index)' ref='a'>{{item.name}}</a></li>\n" +
+            "                        </ul>\n" +
+            "                    </li>\n" +
+            "                </ul>\n" +
+            "\n" +
+            "            </div>\n" +
+            "        </div>\n" +
+            "    </div>\n" +
+            "\n" +
+            "</div>",
+        data() {
+            return {
+                msg: "xiaoxi",
+                isActive: true,
+                narlist: [
+                    {href: "index.html", name: "首页"},
+                    {href: "text-write.html", name: "记录美好"},
+                    {href: "text-main.html", name: "发现故事"},
+                    {href: "aboutsite.html", name: "关于本站"},
+                ],
+
+                ablist: [
+                    {href: "aboutme/login", name: "登录/注册"},
+                    {href: "aboutme/collect", name: "我的收藏"},
+                    {href: "aboutme/logs", name: "我的文章"},
+                    {href: "aboutme/attention", name: "我的关注"}
+                ],
+
+            }
+        },
+        methods: {
+            toNowpage(index) {
+                console.log(this.$refs.a[index].href);
+            }
+        }
+    })
+    //在Vue的原型链上创建一个全局对象，保存用户的信息和即将访问文章的信息，减少数据库的压力，其vue实例后代的都可以找到并且使用这个对象
+    Vue.prototype.GLOBAL = {}
+    //以下为测试数据，真实数据要事件触发后进行重新赋值
+    Vue.prototype.GLOBAL.presentlog ={
+        userID: "2017254142",
+        textID: "textID",
+        title: "the title of one logs",
+        username: 'frenchcai',
+        date: "2020年02月23日",
+        logimgs: [{userID: "userID", textID: "textID", imgsrc: "./photos/bg1.png"}],
+        category: [{cateID: "1", catename: "运动"}],
+        num_message: 2,
+        num_visited: 3,
+        num_like: 5,
+        message: [{
+            "userID": "1223",
+            "username": "一旬",
+            "message": "加油啊",
+        }]
+    }
+    Vue.prototype.GLOBAL.loginstatus = 0
+    Vue.prototype.GLOBAL.user = {"userID": "2017254142", "username": "黑旋风"}
+
+    //数据已经测试，ok
+    let mylogs = {
+        template: "#mylogs",
+        data() {
+            return {
+                mylogsnum: 4,
+                cateclasstype: {
+                    '1': "label label-default",
+                    '2': "label label-primary",
+                    "3": "label label-success",
+                    "4": "label label-info",
+                    "5": "label label-warning",
+                    "6": "label label-danger"
+                },
+                loglist: [{
+                    userID: "userid",
+                    textID: "textID",
+                    title: "the title of one logs",
+                    text: "this is test text",
+                    username: 'frenchcai',
+                    date: "2020年02月23日",
+                    logimgs: [
+                        {
+                            userID: "userID", textID: "textID", imgsrc: "./1111.pmg"
+                        }
+                    ],
+                    category: [
+                        {cateID: "1", catename: "运动"}
+                    ],
+                    num_message: 2,
+                    num_visited: 3,
+                    num_like: 5,
+                    message: [{
+                        "userID": "1223",
+                        "username": "一旬",
+                        "message": "加油啊",
+
+                    }]
+                }]
+            }
+        },
+        methods: {
+            created() {
+                //异步请求数据
+                /*    axios.post('./queryTextByUser',
+                        'username=' +this.GLOBAL.user.username,
+                        // 参数 lastName
+                    ).then(response => this.mylogslist=response.data)
+                        .catch(function (error) { // 请求失败处理
+                            console.log("查找文章失败啦，在query方法上出错啦");
+                        })
+                    */
+            },
+            //readnow可以是一个全局函数
+            readnow(index) {
+                //在跳转之前，需要对全局的presentlog数据进行渲染
+                this.GLOBAL.presentlog = this.loglist[index]
+                this.GLOBAL.loginstatus = 1
+                console.log("123",this.GLOBAL.presentlog,this.GLOBAL.loginstatus);
+                //window.location.href = 'text-main.html?textID=' + this.loglist[index].textID
+
+            }
+        }
+
+
+    }
+    let mycollect = {
+        template: "#mycollect",
+        data() {
+            return {
+                userID: "",
+                //useriD暂时不管，要使用全局的变量user
+                logsnum: 1,
+                loglist: [
+                    {
+                        userID: "userid",
+                        textID: "textID",
+                        title: "the title of one logs",
+                        text: "这个是实例文本",
+                        username: 'frenchcai',
+                        date: "2020年02月23日",
+                        logimgs: [],
+                        category: [{cateID: "1", catename: "运动"}],
+                        num_message: 2,
+                        num_visited: 3,
+                        num_like: 5,
+                        message: [{}]
+                    }
+                ]
+            }
+        },
+        methods: {
+            created() {
+                /*   axios.post('/jietao/queryAllTextServlet',
+                       'userID=' +this.GLOBAL.user.userID
+                       // 参数 this.GLOBAL.user是全局变量
+                   )
+                       .then(response => this.loglist=response.data)
+                       .catch(function (error) { // 请求失败处理
+                           console.log("查找文章失败啦，在query方法上出错啦");
+                       })
+   */
+            },
+            readnow(index) {
+                //在跳转之前，需要对全局的presentlog数据进行渲染
+                this.GLOBAL.presentlog = this.loglist[index]
+                console.log("123");
+                window.location.href = 'text-main.html?textID=' + this.loglist[index].textID
+            }
+        }
+    }
+    let myattention = {
+        template: "#myattention",
+        data() {
+            return {
+                friendsnum: 6,
+                friendlist: [],
+
+            }
+        },
+        methods: {
+            created() {
+                //异步请求数据
+                /*    axios.post('./queryAllFriends',
+                        'userID=' +this.GLOBAL.user.userID
+                        // 参数 this.GLOBAL.user是全局变量
+                    )
+                        .then(response => {this.friendlist=response.data.friendlist;this.friendsnum=data.num})
+                        .catch(function (error) { // 请求失败处理
+                            console.log("查找文章失败啦，在query方法上出错啦");
+                        })
+    */
+            }
+        }
+    }
+    let middlemain = {
+        template: "#middlemain",
+        props: ["user"],
+        data() {
+            return {
+                leftlist: [
+                    {liclass: "nav-left-liitem", aclass: "small", href: "aboutme/mycollect", name: "我的收藏"},
+                    {liclass: "nav-left-liitem", aclass: "small", href: "aboutme/mylogs", name: "我的文章"},
+                    {liclass: "nav-left-liitem", aclass: "small", href: "aboutme/myattention", name: "我的关注"},
+                    {liclass: "nav-left-liitem", aclass: "small", href: "aboutme/logout", name: "退出登录"},
+                ],
+                comid: "myattention",
+            }
+        },
+        methods: {
+            toMy(href) {
+                console.log(href, href.split("/")[1])
+                this.comid = href.split("/")[1]
+            }
+        },
+        components: {mycollect, mylogs, myattention}
+    }
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            user: {
+                userID: "",
+                username: "",
+                userheadimg: "",
+            }
+        },
+        components: {middlemain}
+    })
+
+</script>
+</html>

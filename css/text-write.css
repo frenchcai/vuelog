@@ -1,0 +1,86 @@
+.editor-caption {
+    height: auto;
+    background-color: #337ab7;
+}
+
+.editor-caption h3 {
+    height: 100%;
+    text-align: center;
+    font-size: 2em;
+    color: white;
+    text-transform: capitalize;
+    line-height: 10vh;
+    font-weight: 700;
+
+}
+
+.write-body {
+
+    height: auto;
+}
+
+.diary-title {
+    line-height: 6vh;
+    font-size: 1.2em;
+    white-space: nowrap;
+    padding: 20px 0;
+}
+
+
+.diary-title {
+    padding: 0;
+    background-color: rgba(239, 243, 245, 0.3);
+    border: 1px solid #a9a9a9;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.btn-write {
+    border-radius: 3px;
+    background-color: #5CBC63;
+    color: white;
+    text-align: left;
+
+}
+
+
+.diary-title input {
+    font-weight: bold;
+    width: 80%;
+
+    line-height: 6vh;
+    border: 0px;
+}
+
+.title-input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+
+}
+
+.diary-body {
+    padding: 0;
+}
+
+.note-editable {
+    margin-top: -1px; /*将多出来的一像素边框隐藏*/
+    border: 1px solid #ccc;
+    min-height: 70vh; /*编辑框最小高度*/
+    height: auto; /*编辑框高度超过最小高度会根据内容高度自适应*/
+}
+
+.btn-manage {
+    text-align: center;
+    background-color: rgba(239, 243, 245, 0.3);
+    font-weight: bold;
+    width: 100%;
+    line-height: 6vh;
+    padding: 0;
+}
+
+.note-icon-menu-check {
+    color: #00bfff;
+    visibility: hidden;
+}

@@ -1,0 +1,24 @@
+.text-main-navgation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 66;
+}
+
+.text-relate {
+    margin-top: 60px;
+}
+
+.relate-head {
+    border-left: 3px solid #337ab7;
+    padding: 5px 20px;
+    min-height: 26px;
+    line-height: 26px;
+    padding: 5px 20px;
+    background-color: #f8f9f7;
+    font-size: 16px;
+    font-weight: 400;
+    color: #585957;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+}

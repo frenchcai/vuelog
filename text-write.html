@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/summernote.css">
+	<title>编辑页面</title>
+	<style type="text/css">
+	</style>
+</head>
+<body>
+	<div class="text-main-navgation">
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:0;">
+		<div class="col-lg-1 col-md-1 col-sm-3 col-xs-0 logo hidden-xs">
+			<a href="index.html"><img src="photos/logo3.png" class="img-responsive center-block" alt="Responsive image"></a>
+		</div>
+		<div class="col-lg-11 col-md-11 col-sm-9 col-xs-12 navegation" style="padding:0;">
+			<button type="button" class="navbar-toggle collapsed minimenu" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+
+				菜单
+			</button>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="index.html">首页</a></li>
+					<li><a href="text-write.html" id="nowpage">记录美好</a></li>
+					<li><a href="text-main.html" >发现故事</a></li>
+					<li><a href="aboutsite.html">关于本站</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+						   aria-expanded="false">我的<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">登录/注册</a></li>
+							<li><a href="aboutme.html?page=1">我的收藏</a></li>
+							<li><a href="aboutme.html?page=2">我的文章</a></li>
+							<li><a href="aboutme.html?page=3">我的关注</a></li>
+							<li><a href="">退出账号</a></li>
+						</ul>
+					</li>
+				</ul>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+	<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 main">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 editor-caption  hidden-xs">
+				<h3>Write down your stories, Appreciate the time and freedom</h3>
+		</div>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 diary-title">
+			<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+				<button class="btn btn-manage">Dairy</button>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 title-input">
+				<input type="text" name="diary-title" placeholder="输入文章标题" maxlength="50"
+							style="width:80%;" /><span class="wordnum">字数<span class="wordnumbers">10</span>/50</span>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">文章分类<span class="caret"></span>
+				</button>
+				<ul class="note-dropdown-menu dropdown-menu note-check dropdown-fontname">
+
+								<li><a href="#"><i class="note-icon-menu-check"></i>旅行</a></li>
+								<li><a href="#"><i class="note-icon-menu-check"></i>游戏</a></li>
+								<li><a href="#"><i class="note-icon-menu-check"></i>学习</a></li>
+								<li><a href="#"><i class="note-icon-menu-check"></i>美食</a></li>
+								<li><a href="#"><i class="note-icon-menu-check"></i>运动</a></li>
+								<li><a href="#"><i class="note-icon-menu-check"></i>恋爱</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="#"><i class="note-icon-menu-check"></i>其他</a></li>
+
+						   </ul>
+			</div>
+
+			<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
+				<button class="btn btn-write">&nbsp发布文章</button>
+			</div>
+		</div>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 diary-body">
+			<div class="text-editor">
+				<div id="summernote"><p>在这里记录下你的心情</p></div>
+			</div>
+		</div>
+
+	</div>
+ <script>
+	 var ty=window.navigator.userAgent.toString();
+	 console.log(ty)
+	 if(ty.indexOf("MSIE")!=-1|ty.indexOf("Trident")!=-1){
+	 	document.write("<script src=\"js\/summernote.0.88.js\"><\/script>")
+		 console.log("1")
+	 }else{
+		 document.write("<script src=\"js\/summernote.min.js\"><\/script>")
+		 console.log("2")
+	 }
+
+
+    $(document).ready(function() {
+       	var a_content = $('#summernote').summernote('code');
+
+        $(".btn-write").click(function(){
+    	alert($('#summernote').summernote('code'));
+    })
+//添加滚动监听事件
+
+		var b=$(".note-toolbar").offset().top
+		var c=$(".text-main-navgation").css("height")
+		//获取最开始的位置
+		window.addEventListener('scroll',f)
+function f() {
+console.log(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop)
+// 根据 summernote className 找到他的 toolbar
+	var a=window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+	console.log(c)
+	if(a>b){
+		$(".note-toolbar").css({'position':'fixed',"z-index":"9999","top":c});
+	}else{
+		$(".note-toolbar").css({'position':'relative',"z-index":"9999","top":""});
+	}
+}
+		function repositionToolbar() {
+			// 根据 summernote className 找到他的 toolbar
+			const $editor = $('.editor').siblings('.note-editor');
+			const $toolbar = $editor.find('.note-toolbar');
+			// 得到 toolbar 的高度
+			const toolbarHeight = $toolbar.height();
+			// 得到浏览器当前滚动条 top 位置
+			const windowTop = $(window).scrollTop();
+			// 编辑器的 top 位置
+			const editorTop = $editor.offset().top;
+			// 编辑器的 bottom 位置
+			const editorBottom = editorTop + $editor.height();
+
+			// 判断如果滚动条 top 位置大于编辑器 top 位置，且编辑器 bottom 没有超出滚动条 top
+			// 且编辑器的 bottom 大于 toolbar 的高度（让 toolbar 不超出编辑器范围）
+			if (windowTop > editorTop && windowTop < editorBottom && editorBottom > toolbarHeight) {
+				// 设置 toolbar position 为 fixed，并根据滚动条设置固定坐标
+				const pos = $('#mmodal').scrollTop() - toolbarHeight + (toolbarHeight < 100 ? 15 : 50);
+				$toolbar.css('position', 'fixed');
+				$toolbar.css('top', `${pos}px`);
+				$toolbar.css('width', `${$editor.width()}px`);
+				$toolbar.css('z-index', '99999');
+				$editor.css('padding-top', '42px');
+			} else {
+				// 如果不符合以上条件，则让 toolbar 的宽度等于编辑器的宽度
+				// 如果自适应页面拖动时可以保证 toolbar 不超出编辑器
+				$toolbar.css('width', `${$editor.width()}px`);
+			}
+
+			// 如果编辑器的顶部在视野范围内，则让 toolbar 恢复原位。
+			if (editorTop > 0) {
+				$toolbar.css('position', 'static');
+				$editor.css('padding-top', '0px');
+			}
+
+
+		};
+    });
+
+
+  </script>
+</body>
+</html>

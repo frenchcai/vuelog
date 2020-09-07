@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mialab.mybatis_first_demo.mapper.TextMapper">
+	<select id="getNumTextByParams" resultType="int">
+		SELECT COUNT(*) FROM text <where> <if test="category!=null">category Like '%${category}%'</if><if test="content!=null">and text LIKE '%${content}%'</if></where>
+	</select>
+
+
+	<select id="getNumMylike" resultType="int">
+		SELECT COUNT(*) FROM mylike right join text on text.userID=mylike.userID and text.textID=mylike.textID where myID=#{userID}
+	</select>
+
+
+	<select id="queryAllTextBySearchContent" resultType="com.mialab.mybatis_first_demo.domain.text">
+		SELECT * FROM text where <if test="category!=null">category LIKE '%${category}%'</if><if test="content!=null">and text LIKE '%${content}%'</if>
+		ORDER BY
+			<if test="isnew ==1">date desc</if>
+			<if test="num_like ==1">,num_like desc</if>
+			<if test="num_visited == 1">,num_visited desc</if>
+			<if test="num_message == 1">,num_message desc</if>
+		LIMIT #{num} OFFSET #{begin}
+	</select>
+
+	<select id="queryAllTextByCateID" resultType="com.mialab.mybatis_first_demo.domain.text">
+		SELECT * FROM text where <if test="category!=null">category LIKE '%${category}%'</if><if test="content!=null">and text LIKE '%${content}%'</if>
+		ORDER BY date desc
+			<if test="num_like ==1">,num_like desc</if>
+			<if test="num_visited == 1">,num_visited desc</if>
+			<if test="num_message == 1">,num_message desc</if>
+		LIMIT #{num} OFFSET #{begin}
+	</select>
+
+	<select id="queryHotLogs" resultType="com.mialab.mybatis_first_demo.domain.text">
+		SELECT * FROM text ORDER BY num_visited desc limit 3
+	</select>
+
+
+	<select id="queryMessage" resultType="com.mialab.mybatis_first_demo.domain.Message">
+		SELECT * FROM message where userID=#{userID} and textID=#{textID}
+	</select>
+	<select id="queryRelativelogs" resultType="com.mialab.mybatis_first_demo.domain.text">
+		SELECT * FROM text where userID=#{userID} and category Like  LIKE '%${category}%' LIMIT 3
+	</select>
+
+	<select id="searchText"    parameterType="com.mialab.mybatis_first_demo.domain.shareText"   resultType="com.mialab.mybatis_first_demo.domain.shareText">
+		SELECT * FROM text <where>
+		<if test="text !=null and text!='' ">
+			text LIKE '%${text}%'
+		</if>
+
+		<if test="title!=null and title!='' ">
+			title LIKE '%${title}%'
+		</if>
+
+		<if test="username!=null and username!=''  ">
+			username LIKE '%${username}%'
+		</if>
+
+		<if test="date!=null and date!=''   ">
+			date LIKE '%${date}%'
+		</if>
+	</where>
+	</select>
+
+	<select id="searchByName" resultType="com.mialab.mybatis_first_demo.domain.shareText">
+	SELECT * FROM text where username=#{searchfactor}
+	</select>
+
+	<select id="queryMytext" parameterType="com.mialab.mybatis_first_demo.domain.User" resultType="com.mialab.mybatis_first_demo.domain.text">
+		SELECT * FROM text where userID=#{userID}
+	</select>
+
+
+	<select id="queryMyLikeText" parameterType="com.mialab.mybatis_first_demo.domain.User" resultType="com.mialab.mybatis_first_demo.domain.text">
+		SELECT * FROM mylike right join text on text.userID=mylike.userID and text.textID=mylike.textID where myID=#{userID}
+	</select>
+
+	<select id="getNumTextByUser" resultType="int">
+	SELECT COUNT(*) FROM text <where>
+	<if test="username!=null"> user=#{username}</if>
+		<if test="userID!=null"> userID=#{userID}</if>
+	</where>
+	</select>
+
+
+	<select id="checkLand" parameterType="com.mialab.mybatis_first_demo.domain.User" resultType="com.mialab.mybatis_first_demo.domain.User">
+
+		SELECT *  FROM user where username=#{username} and password=#{password} LIMIT 1
+
+	</select>
+
+	<select id="querySuggestion" resultType="com.mialab.mybatis_first_demo.domain.Suggestion">
+		SELECT * FROM suggestion ORDER BY date desc
+	</select>
+
+
+	<insert id="addLog" parameterType="com.mialab.mybatis_first_demo.domain.text">
+		INSERT into text (userID,textID,title,text,summary,username,date,category,textimg) values(#{userID},#{textID},#{title},#{text},#{summary},#{username},#{date},#{category},#{textimg})
+	</insert>
+
+
+	<insert id="sendMessage">
+		INSERT into message (myName,myID,userID,textID,message,date) values(#{myName},#{myID},#{userID},#{textID},#{message},#{date})
+	</insert>
+
+	<insert id="sendSuggestion">
+		INSERT into suggestion (userID,username,message,date) values(#{userID},#{username},#{message},#{date})
+	</insert>
+
+
+
+	<insert id="addUser" parameterType="com.mialab.mybatis_first_demo.domain.User">
+		INSERT INTO user (username,password,qqheading,qq) values(#{username},#{password},#{qqheading},#{qq})
+	</insert>
+
+	<insert id="addToMine">
+		INSERT into mylike(myID,userID,textID) values(#{myID},#{userID},#{textID})
+	</insert>
+
+	<delete id="cancelLike">
+
+	DELETE FROM mylike where myID=#{myID} and userID=#{userID} and textID=#{textID}
+	</delete>
+
+	<delete id="deleteText">
+
+	DELETE FROM text where userID=#{userID} and textID=#{textID}
+
+	</delete>
+
+
+	<update id="notLike">
+	 UPDATE text set num_like =(num_like-1) where userID=#{userID} AND textID=#{textID}
+	</update>
+
+	<update id="reWriteText" parameterType="com.mialab.mybatis_first_demo.domain.text">
+		UPDATE text set
+		title=#{title},
+		text=#{text},
+		textimg=#{textimg},
+		date=#{date},
+		category=#{category}
+		where textID=#{textID} AND userID=#{userID}
+	</update>
+
+
+
+	<update id="updateNumMessage">
+	UPDATE text set num_message=(num_message+1) where userID=#{userID} and textID=#{textID}
+	</update>
+
+
+	<update id="isLike">
+	 UPDATE text set num_like =(num_like+1) where userID=#{userID} AND textID=#{textID}
+	</update>
+
+	<update id="updateNumVisited">
+	 UPDATE text set num_visited =(num_visited+1) where userID=#{userID} AND textID=#{textID}
+	</update>
+
+	<update id="updateLog" parameterType="com.mialab.mybatis_first_demo.domain.text">
+		UPDATE text set
+		title=#{title},
+		text=#{text},
+		textimg=#{textimg},
+		date=#{date},
+		category=#{category},
+		summary=#{summary}
+		where textID=#{textID} AND userID=#{userID}
+	</update>
+
+</mapper>

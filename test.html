@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insert title here</title>
+	<meta charset="UTF-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+	<style type="text/css">
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #edf3ff;
+
+		}
+
+		.body {
+			margin: 0;
+			padding: 0;
+			margin: 0;
+			padding: 0;
+			font-size: 14px;
+			font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, 微软雅黑, Arial, sans-serif;
+		}
+
+		#black {
+			background-color: black;
+			height: 0;
+		}
+
+		.login {
+			background-color: white;
+		}
+
+		.main {
+			padding-top: 30px;
+		}
+
+		.left {
+			height: 90%;
+			width: 40%;
+			float: left;
+			background-color: green;
+		}
+
+		.right {
+			margin-left: 8%;
+			height: 90%;
+			width: 50%;
+			float: left;
+			background-color: skyblue;
+		}
+
+		.search {
+			height: 10%;
+			background-color: yellow;
+			margin-left: 40px;
+		}
+
+		.items {
+			height: 10%;
+			background-color: yellow;
+		}
+
+		/*拯救高度坍塌--文章文本*/
+		.caption:after {
+			display: block;
+			visibility: hidden;
+			clear: both;
+			height: 0;
+			content: '.'
+
+
+		}
+
+		.caption {
+			zoom: 1;
+		}
+
+		/*拯救高度坍塌--图片*/
+		.box:after {
+			display: block;
+			visibility: hidden;
+			clear: both;
+			height: 0;
+			content: '.'
+
+
+		}
+
+		.box {
+			zoom: 1;
+		}
+
+		#sport{
+			position: absolute;
+			left:0%;
+			transform: rotateY(-70deg);
+			z-index: 3;
+		}
+		#food{
+			position: absolute;
+			left:0%;
+			transform: rotateY(45deg);
+			z-index: 2;
+		}
+		#game{
+			position: absolute;
+			transform: rotateY(25deg);
+		}
+	</style>
+
+</head>
+<body >
+<div class="con" style="position: relative;left:10%;width: 50%;">
+	<img src="photos/sport1.png" >
+	<img src="photos/food1.png" >
+
+
+
+</div>
+<div id="app">
+	<div v-for="(text,index) in shareText" v-if="index>1">
+		<div :id=text.textID class='col-sm-12 col-md-6 clo-lg-6'><input type=hidden :value=text.userID />
+			<input type=hidden :value=text.textID />
+			<div class=thumbnail>
+				<div class='box box-element'>
+					<img :src="'./images/' +text.username +'/'+text.picpath1"/>
+					<img :src="'./images/' +text.username + '/' + text.picpath2" />
+				</div>
+				<div class='caption'><h4 :value=text.title></h4><h4 >{{text.text}}</h4>
+					<p :value=text.text></p>
+					<p><input :id="'unionID'+text.index"  type=hidden :value=text.userID+text.textID />
+						<a role=button v-on:click="isLike(index)" :id="'blike' +index" :value="'点赞'+text.num_like"></a>
+						<a role=button  v-on:click="addToMine(index)" :id="'btome' +index">收藏</a>
+						<a role=button  v-on:click="sendMessage(index)" data-toggle='modal' data-target='#myModal'>留言" + {{textnum_message}} </a>
+
+					</p>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	<button v-on:click="query">dianji</button>
+	<button @click="nowtest">现在测试</button>
+</div>
+
+<div class="orderselect">
+	排序条件:
+	<label class="checkbox-inline">
+		<input type="checkbox" id="inlineCheckbox" v-model="allselect" value=true :checked="allselect" @click="orderAll">留言数量
+	</label>
+	<label class="checkbox-inline">
+		<input type="checkbox" id="inlineCheckbox1" v-model="isnew" value=true :checked="isnew">最近发布
+	</label>
+	<label class="checkbox-inline">
+		<input type="checkbox" id="1"  v-model="isvisited" value=true :checked="isvisited">浏览数量
+	</label>
+	<label class="checkbox-inline">
+		<input type="checkbox" id="inlineCheckbox2" v-model="isgood" value=true :checked="allselect">点赞数量
+	</label>
+	<label class="checkbox-inline">
+		<input type="checkbox" id="inlineCheckbox3" v-model="ismessage" value=true :checked="ismessage">留言数量
+	</label>
+	<label class="checkbox-inline"><button class="btn btn-success" >隐藏</button> </label>
+</div>
+
+<script src="js/vue.js"></script>
+<script type="text/javascript">
+	var app = new Vue({
+		el:'#app',
+		data:function(){
+		return{
+			name:"Vue.js",
+			username:"",
+			password:"",
+			shareText:[
+
+			],
+			page:"1",
+			num:"5",
+			}
+		},
+		// 在 `methods` 对象中定义方
+		// 在 `methods` 对象中定义方法
+		methods: {
+			greet: function (event) {
+				// `this` 在方法里指当前 Vue 实例
+				alert('Hello ' + this.name + '!')
+				// `event` 是原生 DOM 事件
+				if (event) {
+					alert(event.target.tagName)
+				}
+			},
+			//遍历数据库文章
+			query: function(event){
+				page=this.page;
+				num=this.num;
+				axios.post('/jietao/queryAllTextServlet',
+								'begin='+page+"&num="+num
+								// 参数 lastName
+				          )
+						.then(response => (this.shareText = response.data))
+						.catch(function (error) { // 请求失败处理
+							console.log("查找文章失败啦，在query方法上出错啦");
+						})
+
+			},
+			async querylogsData(url){
+				var that=this
+				that.postparams.begin= ((that.nextpage-1)*this.apagenum+1)
+				that.postparams.num=that.apagenum
+				let data= await axios({
+					method:"post",
+					url:url,
+					data:Qs.stringify(that.postparams),
+					timeout:2000,
+				})
+
+				return data
+			},
+
+			async test(){
+				var postparams={
+					"begin":1,
+					"num":5
+				}
+				var that=this
+				let data= await axios({
+					method:"post",
+					url:url,
+					data:Qs.stringify(postparams),
+					timeout:2000,
+				})
+				return data
+
+			},
+			nowtest(){
+				let data=this.querylogsData('/jietao/queryAllTextServlet')
+				console(data)
+				console("123")
+			}
+		},
+
+			querylogsByCategory(categoryname) {
+				that.querymode = "category"
+				//该值一样，不会触发watch
+				that.postparams.category = categoryname
+				let data=this.querylogsData('./queryAllTextByCategory')
+
+			}
+	})
+
+
+</script>
+
+
+
+</body>
+</html>

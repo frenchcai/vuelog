@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>记录生活，记录美好瞬间</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background-image: url("photos/bgsea.png");
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: 华文楷体, Helvetica neue, Helvetica Tahoma, lantinghei sc, Microsoft Yahei;
+
+        }
+
+        @media screen and (max-width: 767px) {
+            body {
+                padding: 0;
+                margin: 0;
+                font-family: 华文楷体, Helvetica neue, Helvetica Tahoma, lantinghei sc, Microsoft Yahei;
+                background-color: #D6E0F4;
+            }
+        }
+
+        .content {
+            margin-top: 80px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="text-main-navgation">
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="padding:0;">
+        <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3 logo hidden-xs">
+            <a href="index.html"><img src="photos/logo3.png" class="img-responsive center-block" alt="Responsive image"></a>
+        </div>
+
+        <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 navegation" style="padding:0;">
+            <button type="button" class="navbar-toggle collapsed minimenu" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+
+                菜单
+            </button>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html" id="nowpage">首页</a></li>
+                    <li><a href="text-write.html">记录美好</a></li>
+                    <li><a href="text-main.html">发现故事</a></li>
+                    <li><a href="aboutsite.html">关于本站</a></li>
+                    <li class="dropdown">
+                        <a href="aboutme.html" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true"
+                           aria-expanded="false">我的<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">登录/注册</a></li>
+                            <li><a href="aboutme.html?page=1">我的收藏</a></li>
+                            <li><a href="aboutme.html?page=2">我的文章</a></li>
+                            <li><a href="aboutme.html?page=3">我的关注</a></li>
+                            <li><a href="">退出账号</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--主体部分-->
+<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 content">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 main-left">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 introduce">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-descrite">网站简介</div>
+                    <div class="panel-body">
+                        <p>这场人生的漫长旅行，我们走走停停。去过的地方、看过的风景、经历的事情、遇见的人、收获的心情
+                            ，都成为了我们生命的一部分。</p>
+                        <p> 热爱生活的你，是否有想过，把这些记录下来，让他们作为逝去时光的纪念呢？</p>
+                        <p>在这里，写下你的故事或是一段小插曲，分享你的喜悦，或者难过时，忧伤可以得到舒缓。</p>
+                        <p>你也可以在这里结识到志趣相投的伙伴哦！互相交流。</p>
+                        <p>只要你用邮箱在本站<a href="">注册一个账号</a>,或者<a href="">使用qq登陆</a>，便开启开启你的美好之旅啦！
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 landing">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-descrite">登录栏</div>
+                    <div class="panel-body">
+                        <div class="landing-chose">
+                            <ul class="nav nav-tabs">
+                                <li role="presentation" class="active"><a href="#">账号登陆</a></li>
+                                <li role="presentation"><a href="#">QQ一键登陆</a></li>
+                            </ul>
+                        </div>
+                        <div class="landing-num-input">
+                            <form>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" id="exampleInputEmail1"
+                                           placeholder="Email">
+                                </div>
+                                <div class="form-group">
+
+                                    <input type="password" class="form-control" id="exampleInputPassword1"
+                                           placeholder="Password">
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox"> 记住我
+                                    </label>
+                                    <label>
+                                        <button type="submit" class="btn btn-success">登录</button>
+                                    </label>
+                                    <label>
+                                        <button type="submit" class="btn">注册</button>
+                                    </label>
+                                </div>
+
+                            </form>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 write-text">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-descrite">发布文章</div>
+
+                    <div class="panel-body">
+                        <form>
+                            <div class="form-group">
+                                <label>
+                                    <button type="button" class="btn btn-write btn-lg" title="温馨提示，在使用此功能前，需要登陆哦！">
+                                        发布文章
+                                    </button>
+                                    <small>点击这里，可以开启你的日记之旅啦！</small>
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <button type="button" class="btn btn-write btn-lg">最新动态</button>
+                                    <small>点击这里，可以发现许多有趣的故事哦！</small>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0 main-line"></div>
+    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 main-right">
+        <div class="row">
+            <p class="panel-heading text-descrite" style="background-color: #337ab7;color: white;">动态分类</p>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 cateloge">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 img-cateloge">
+                        <a href="#" class="thumbnail">
+                            <img src="cateloge/sport4.png">
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 img-cateloge">
+                        <a href="#" class="thumbnail">
+                            <img src="cateloge/food4.png">
+                        </a>
+                        <a href="#" class="thumbnail">
+                            <img src="cateloge/study4.png">
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 img-cateloge">
+                        <a href="#" class="thumbnail">
+                            <img src="cateloge/trip4.png">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 img-cateloge">
+                        <a href="#" class="thumbnail">
+                            <img src="cateloge/love4.png">
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 img-cateloge">
+                        <a href="#" class="thumbnail">
+                            <img src="cateloge/game4.png">
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-0 col-xs-0 img-cateloge">
+
+                        <h1 style="color: black;">更多美好，等你发现...</h1>
+
+                    </div>
+                </div>
+
+                <!--     <a href="#" class="thumbnail">
+                         <img src="photos/category3.png">
+                     </a>
+                 -->
+
+            </div>
+
+        </div>
+
+        <div class="row newtext">
+            <div class="panel panel-primary">
+                <div class="panel-heading text-descrite">热门动态栏</div>
+
+                <div class="panel-body">
+                    <p><a href="">和平精英，胜利大法，强！</a></p>
+                    <p>和平精英，胜利大法，强！</p>
+                    <p>和平精英，胜利大法，强！</p>
+                    <p>和平精英，胜利大法，强！</p>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 footer">
+    <p>粤ICP备19031574号-1</p>
+    <P><a href="http://www.beian.miit.gov.cn">备案查询</a></P>
+</div>
+
+</body>
+</html>
